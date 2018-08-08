@@ -1,0 +1,8 @@
+{
+  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+  "itemDisplayName": "Create a SQL Server AlwaysOn Cluster Deployment",
+  "description": "This template creates 3 new Azure VMs, each group load balancer and a VNet. Two SQL Servers and witness in AlwaysOn configuration",
+  "summary": "This template creates a SQL Server AlwaysOn Cluster Deployment",
+  "githubUsername": "bartrumb",
+  "dateUpdated": "2016-04-28"
+}
