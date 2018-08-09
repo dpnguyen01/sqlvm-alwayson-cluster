@@ -61,7 +61,7 @@
       "name": "[parameters('sql1AddressNameWithSuffix')]",
       "location": "[parameters('location')]",
       "properties": {
-        "publicIPAllocationMethod": "dynamic"
+        "publicIPAllocationMethod": "Dynamic"
       }
     },
     {
@@ -70,21 +70,7 @@
       "name": "[parameters('sql0AddressNameWithSuffix')]",
       "location": "[parameters('location')]",
       "properties": {
-        "publicIPAllocationMethod": "dynamic"
-      }
-    },
-    {
-      "name": "[parameters('virtualNetworkName')]",
-      "type": "Microsoft.Network/virtualNetworks",
-      "location": "[parameters('location')]",
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('virtualNetworkAddressRange')]"
-          ]
-        },
-        "subnets": "[parameters('subnets')]"
+        "publicIPAllocationMethod": "Dynamic"
       }
     }
   ],

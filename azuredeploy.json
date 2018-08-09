@@ -17,23 +17,23 @@
     "sqlVMSize": {
       "type": "string",
       "allowedValues": [
-        "Standard_E2s_v3",
-        "Standard_E4s_v3",
+        "Standard_E8-2s_v3",
+        "Standard_E8-4s_v3",
         "Standard_E8s_v3",
+        "Standard_E16-4s_v3",
+        "Standard_E16-8s_v3",
         "Standard_E16s_v3"
       ],
       "metadata": {
         "description": "The size of the SQL VMs Created"
       },
-      "defaultValue": "Standard_E8s_v3"
+      "defaultValue": "Standard_E8-2s_v3"
     },
     "witnessVMSize": {
       "type": "string",
       "allowedValues": [
         "Standard_E2s_v3",
-        "Standard_E4s_v3",
-        "Standard_E8s_v3",
-        "Standard_E16s_v3"
+        "Standard_E4-2s_v3"
       ],
       "metadata": {
         "description": "The size of the Witness VM Created"
@@ -76,61 +76,108 @@
       },
       "defaultValue": "Premium_LRS"
     },
+    "sqlAvailabilitySet": {
+      "type": "string",
+      "allowedValues": [
+        "std-sql-as",
+        "stdqa-sql-as",
+        "sec-sql-as",
+        "secqa-sql-as",
+        "dev-sql-as",
+        "dpt-sql-as",
+        "dptqa-sql-as"
+      ],
+      "metadata": {
+        "description": "The name of SQL Availability Set"
+      },
+      "defaultValue": "std-sql-as"
+    },
     "virtualNetworkAddressRange": {
       "type": "string",
+      "allowedValues": [
+        "Premium_LRS"
+      ],
       "metadata": {
         "description": "The address range of the new VNET in CIDR format"
       },
-      "defaultValue": "10.0.0.0/16"
+      "defaultValue": "10.122.12.0/22"
     },
     "staticSubnet": {
       "type": "string",
+      "allowedValues": [
+        "10.122.12.128/25",
+        "10.122.14.0/23"
+      ],
       "metadata": {
         "description": "The address range of the subnet static IPs are allocated from in the new VNET"
       },
-      "defaultValue": "10.0.0.0/24"
+      "defaultValue": "10.122.12.128/25"
     },
     "sqlSubnet": {
       "type": "string",
+      "allowedValues": [
+        "10.122.12.128/25",
+        "10.122.14.0/23"
+      ],
       "metadata": {
         "description": "The address range of the SQL subnet created in the new VNET"
       },
-      "defaultValue": "10.0.1.0/26"
+      "defaultValue": "10.122.12.128/25"
     },
     "sqlLBIPAddress": {
       "type": "string",
       "metadata": {
         "description": "The IP address of the new SQL Server Internal Load Balancer"
       },
-      "defaultValue": "10.0.1.9"
+      "defaultValue": "10.122.12.140"
     },
     "deploymentPrefix": {
       "type": "string",
+      "allowedValues": [
+        "std",
+        "stdqa",
+        "sec",
+        "secqa",
+        "dev",
+        "dpt",
+        "dptqa"
+      ],
       "metadata": {
         "description": "The DNS Prefix for the Public IP Address for the Always On Cluster"
       },
-      "defaultValue": "aodns"
+      "defaultValue": "std"
     },
     "virtualNetworkName": {
       "type": "string",
       "metadata": {
         "description": "Name of virtual network to be created"
       },
-      "defaultValue": "autohav2VNET"
+      "defaultValue": "ASU-UTO-USWest-01"
+    },
+    "subnetname": {
+      "type": "string",
+      "allowedValues": [
+        "devqa-int-122.12.128-25",
+        "prod-int-122.14.0-23"
+      ],
+      "metadata": {
+        "description": "Select the Subnet for the cluster."
+      },
+      "defaultValue": "devqa-int-122.12.128-25"
     },
     "templatesBaseUrl": {
       "type": "string",
       "metadata": {
         "description": "Linked Templates base url"
       },
-      "defaultValue": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/sqlvm-alwayson-cluster/nested"
+      "defaultValue": "https://raw.githubusercontent.com/bartrumb/sqlvm-alwayson-cluster/master/nested"
     },
     "scriptsBaseUrl": {
       "type": "string",
       "metadata": {
         "description": "DSC Scripts base url"
       },
-      "defaultValue": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/sqlvm-alwayson-cluster/scripts"
+      "defaultValue": "https://raw.githubusercontent.com/bartrumb/sqlvm-alwayson-cluster/master/scripts"
     },
     "autoPatchingDay": {
       "type": "string",
@@ -188,7 +235,7 @@
       "metadata": {
         "description": "The Sql AlwaysOn Group Name"
       },
-      "defaultValue": "alwayson-ag"
+      "defaultValue": "std_sql_prod_ag"
     },
     "sqlAOListenerPort": {
       "type": "string",
@@ -202,19 +249,19 @@
       "metadata": {
         "description": "The Sql AG Listener Name"
       },
-      "defaultValue": "alwayson-ag-listener"
+      "defaultValue": "std_sql_prod_ag"
     },
     "sqlServerVersion": {
       "type": "string",
       "allowedValues": [
-        "SQL2012SP3-WS2012R2",
+        "SQL2012SP4-WS2012R2-BYOL",
         "SQL2014SP1-WS2012R2",
         "SQL2016-WS2012R2"
       ],
       "metadata": {
         "description": "The Sql Server Version"
       },
-      "defaultValue": "SQL2014SP1-WS2012R2"
+      "defaultValue": "SQL2012SP4-WS2012R2-BYOL"
     },
     "numberOfSqlVMDisks": {
       "type": "string",
@@ -227,7 +274,7 @@
       "metadata": {
         "description": "The Sql VM Disk Size"
       },
-      "defaultValue": "2"
+      "defaultValue": "4"
     },
     "workloadType": {
       "type": "string",
@@ -237,7 +284,7 @@
         "DW"
       ],
       "metadata": {
-        "description": "The Sql VM work load type: GENERAL - general work load; DW - datawear house work load; OLTP - Transactional processing work load"
+        "description": "The Sql VM work load type: GENERAL - general work load; DW - datawarehouse house work load; OLTP - Transactional processing work load"
       },
       "defaultValue": "GENERAL"
     },
@@ -256,21 +303,21 @@
       "sqlLBName": "sqlLoadBalancer"
     },
     "subnetNames": {
-      "staticSubnetName": "staticSubnet",
-      "sqlSubnetName": "sqlSubnet"
+      "staticSubnetName": "[parameters('subnetname')]",
+      "sqlSubnetName": "[parameters('subnetname')]"
     },
     "SQLAOProbe": "SQLAlwaysOnEndPointProbe",
     "sql1AddressName": "sql1IP",
     "sql0AddressName": "sql0IP",
     "vmSettings": {
       "availabilitySets": {
-        "sqlAvailabilitySetName": "sqlAvailabilitySet"
+        "sqlAvailabilitySetName": "[parameters('sqlAvailabilitySet')]"
       },
       "noOfSqlVMs": 2,
       "vmContainerName": "vhds",
       "adPDCVMName": "adPDCVMName",
-      "sqlVMName": "sqlserver-",
-      "sqlwVMName": "cluster-fsw",
+      "sqlVMName": "sql-",
+      "sqlwVMName": "fs-",
       "windowsImagePublisher": "MicrosoftWindowsServer",
       "windowsImageOffer": "WindowsServer",
       "windowsImageSKU": "2012-R2-Datacenter",
@@ -294,6 +341,7 @@
       "sqllbFEConfigID": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
       "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]"
     },
+    "SQL2012SP4-WS2012R2-BYOL": "Enterprise",
     "SQL2012SP2-WS2012R2": "Enterprise",
     "SQL2012SP3-WS2012R2": "Enterprise",
     "SQL2014-WS2012R2": "Enterprise",

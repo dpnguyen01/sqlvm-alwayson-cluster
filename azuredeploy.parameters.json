@@ -21,13 +21,13 @@
          "value":"GEN-UNIQUE"
       },
       "sqlVMSize":{
-         "value":"Standard_DS4"
+         "value":"Standard_E8-2s_v3"
       },
       "witnessVMSize":{
-         "value":"Standard_DS1"
+         "value":"Standard_E2s_v3"
       },
       "domainName":{
-         "value":"contoso.local"
+         "value":"asurite.asu.edu"
       },
       "virtualNetworkAddressRange":{
          "value":"10.0.0.0/16"
