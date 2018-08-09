@@ -1,9 +1,9 @@
 # # Create an Always On Availability Group with SQL Server 2012 replica virtual machines
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Fbartrumb%2Fsqlvm-alwayson-cluster%2Fraw%2Fmaster%2Fazuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Gallery%2Fmyareas%2Fgalleryitems" target="_blank">
 <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fgithub.com%2Fbartrumb%2Fsqlvm-alwayson-cluster%2Fraw%2Fmaster%2Fazuredeploy.json" target="_blank">
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fbartrumb%2Fsqlvm-alwayson-cluster%2Fmaster%2Fazuredeploy.json" target="_blank">
 <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
@@ -34,5 +34,5 @@ This template creates the following resources:
 + 	In default settings for compute require that you have at least 15 cores of free quota to deploy.
 
 + 	The images used to create this deployment are
-	+ 	SQL Server - Latest BYOL SQL Server 2012 SP4 on Windows Server 2012 R2 Image 
+	+ 	SQL Server - Latest BYOL SQL Server 2012 SP4 on Windows Server 2012 R2 Image
 	+ 	Witness - Latest Windows Server 2012 R2 Image
