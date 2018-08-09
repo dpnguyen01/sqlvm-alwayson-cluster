@@ -50,7 +50,8 @@ configuration CreateFailoverCluster
         [Parameter(Mandatory)]
         [String]$SqlAlwaysOnEndpointName,
 
-        [String]$DNSServerName='infra-ritedc-01',
+        [Parameter(Mandatory)]
+        [String]$DNSServerName,
 
         [UInt32]$DatabaseEnginePort = 1433,
 

@@ -288,6 +288,7 @@
     }
   },
   "variables": {
+    "DNSServerName":"infra-ritedc-01",
     "lbSettings": {
       "sqlLBFE": "sqlLBFE",
       "sqlLBBE": "sqlLBBE",
@@ -750,6 +751,9 @@
           "adPDCVMName": {
             "value": "[variables('vmSettings').adPDCVMName]"
           },
+          "DNSServerName": {
+            "value": "[variables('DNSServerName')]"
+          },
           "sqlwVMName": {
             "value": "[variables('vmSettings').sqlwVMName]"
           },
@@ -841,6 +845,9 @@
           },
           "sqlLBIPAddress": {
             "value": "[parameters('sqlLBIPAddress')]"
+          },
+          "DNSServerName": {
+            "value": "[variables('DNSServerName')]"
           },
           "adPDCVMName": {
             "value": "[variables('vmSettings').adPDCVMName]"
