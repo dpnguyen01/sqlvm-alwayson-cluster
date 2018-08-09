@@ -8,6 +8,9 @@
     "adminPassword": {
       "type": "securestring"
     },
+    "deploymentPrefix":{
+      "type": "string"
+    },
     "sqlVMName": {
       "type": "string"
     },
@@ -89,7 +92,7 @@
           "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('sqlAvailabilitySetName'))]"
         },
         "osProfile": {
-          "computerName": "[parameters('sqlwVMName')]",
+          "computerName": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlwVMName'),'-01')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -139,7 +142,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('sqlVMName'), copyindex())]",
+      "name": "[concat(parameters('deploymentPrefix'),parameters('sqlVMName'),'-0',copyindex())]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/availabilitySets/',parameters('sqlAvailabilitySetName'))]"
@@ -156,7 +159,7 @@
           "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('sqlAvailabilitySetName'))]"
         },
         "osProfile": {
-          "computerName": "[concat(parameters('sqlVMName'), copyindex())]",
+          "computerName": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-0',copyindex())]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },

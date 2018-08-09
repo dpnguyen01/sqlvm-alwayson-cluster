@@ -45,7 +45,7 @@
       "metadata": {
         "description": "The FQDN of the AD Domain created "
       },
-      "defaultValue": "asurite.asu.edu"
+      "defaultValue": "asurite.ad.asu.edu"
     },
     "sqlServerServiceAccountUserName": {
       "type": "string",
@@ -516,6 +516,9 @@
         "parameters": {
           "sqlAvailabilitySetName": {
             "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
+          },
+          "deploymentPrefix":{
+            "value": "[parameters('deploymentPrefix')]"
           },
           "sqlStorageAccountName": {
             "value": "[parameters('sqlStorageAccountName')]"
