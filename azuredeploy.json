@@ -302,13 +302,13 @@
     "sql1AddressName": "sql1IP",
     "sql0AddressName": "sql0IP",
     "vmSettings": {
+      "adPDCVMName": "infra-ritedc-01",
       "availabilitySets": {
         "sqlAvailabilitySetName": "[parameters('sqlAvailabilitySet')]"
       },
       "noOfSqlVMs": 2,
       "vmContainerName": "vhds",
-      "adPDCVMName": "infra-ritedc-01",
-      "sqlVMName": "sql-",
+            "sqlVMName": "sql-",
       "sqlwVMName": "fs-",
       "windowsImagePublisher": "MicrosoftWindowsServer",
       "windowsImageOffer": "WindowsServer",
@@ -479,9 +479,6 @@
           "location": {
             "value": "[parameters('location')]"
           },
-          "staticSubnetRef": {
-            "value": "[variables('staticSubnetRef')]"
-          },
           "sqlVMName": {
             "value": "[variables('vmSettings').sqlVMName]"
           },
@@ -517,9 +514,6 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "adPDCVMName": {
-            "value": "[variables('vmSettings').adPDCVMName]"
-          },
           "sqlAvailabilitySetName": {
             "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
           },
@@ -751,9 +745,6 @@
           "adPDCVMName": {
             "value": "[variables('vmSettings').adPDCVMName]"
           },
-          "DNSServerName": {
-            "value": "[variables('DNSServerName')]"
-          },
           "sqlwVMName": {
             "value": "[variables('vmSettings').sqlwVMName]"
           },
@@ -848,9 +839,6 @@
           },
           "DNSServerName": {
             "value": "[variables('DNSServerName')]"
-          },
-          "adPDCVMName": {
-            "value": "[variables('vmSettings').adPDCVMName]"
           },
           "sqlwVMName": {
             "value": "[variables('vmSettings').sqlwVMName]"

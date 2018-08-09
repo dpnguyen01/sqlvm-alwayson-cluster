@@ -53,7 +53,7 @@
     "sqlLBIPAddress": {
       "type": "string"
     },
-    "adPDCVMName": {
+    "dnsServerName": {
       "type": "string"
     },
     "sqlwVMName": {
@@ -97,7 +97,7 @@
             "lbAddress": "[parameters('sqlLBIPAddress')]",
             "primaryReplica": "[concat(parameters('sqlVMName'),'1')]",
             "secondaryReplica": "[concat(parameters('sqlVMName'),'0')]",
-            "dnsServerName": "[parameters('adPDCVMName')]",
+            "dnsServerName": "[parameters('dnsServerName')]",
             "adminCreds": {
               "userName": "[parameters('adminUsername')]",
               "password": "privateSettingsRef:adminPassword"
