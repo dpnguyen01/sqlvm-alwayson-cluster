@@ -11,15 +11,6 @@
     "SqlStorageAccountType": {
       "type": "string"
     },
-    "virtualNetworkName": {
-      "type": "string"
-    },
-    "virtualNetworkAddressRange": {
-      "type": "string"
-    },
-    "subnets": {
-      "type": "array"
-    },
     "sql1AddressNameWithSuffix": {
       "type": "string"
     },

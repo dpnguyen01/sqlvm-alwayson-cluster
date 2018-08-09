@@ -64,7 +64,8 @@
       "type": "string",
       "metadata": {
         "description": "The name of Sql Server Storage Account"
-      }
+      },
+      "defaultValue":"asuinfauswestsqllrsp"
     },
     "sqlStorageAccountType": {
       "type": "string",
@@ -91,16 +92,6 @@
         "description": "The name of SQL Availability Set"
       },
       "defaultValue": "std-sql-as"
-    },
-    "virtualNetworkAddressRange": {
-      "type": "string",
-      "allowedValues": [
-        "Premium_LRS"
-      ],
-      "metadata": {
-        "description": "The address range of the new VNET in CIDR format"
-      },
-      "defaultValue": "10.122.12.0/22"
     },
     "staticSubnet": {
       "type": "string",
@@ -315,7 +306,7 @@
       },
       "noOfSqlVMs": 2,
       "vmContainerName": "vhds",
-      "adPDCVMName": "adPDCVMName",
+      "adPDCVMName": "infra-ritedc-01",
       "sqlVMName": "sql-",
       "sqlwVMName": "fs-",
       "windowsImagePublisher": "MicrosoftWindowsServer",
@@ -418,15 +409,6 @@
           },
           "sql0AddressNameWithSuffix": {
             "value": "[variables('sql0AddressNameWithSuffix')]"
-          },
-          "virtualNetworkName": {
-            "value": "[variables('virtualNetworkNameWithSuffix')]"
-          },
-          "virtualNetworkAddressRange": {
-            "value": "[parameters('virtualNetworkAddressRange')]"
-          },
-          "subnets": {
-            "value": "[variables('subnets')]"
           }
         }
       }
