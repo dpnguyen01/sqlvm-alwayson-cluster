@@ -9,7 +9,7 @@
 
 ## Solution overview
 
-This template uses the PowerShell DSC extension to deploy a fully configured Always On Availability Group with SQL Server 2014 replicas.
+This template uses the PowerShell DSC extension to deploy a fully configured Always On Availability Group with SQL Server 2012 replicas.
 
 This template creates the following resources:
 +   3 Azure storage accounts
