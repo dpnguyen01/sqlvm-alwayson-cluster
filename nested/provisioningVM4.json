@@ -79,7 +79,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[parameters('sqlwVMName')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlwVMName'),'-01')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/availabilitySets/',parameters('sqlAvailabilitySetName'))]"
@@ -142,7 +142,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('deploymentPrefix'),parameters('sqlVMName'),'-0',copyindex())]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-0',copyindex())]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/availabilitySets/',parameters('sqlAvailabilitySetName'))]"
