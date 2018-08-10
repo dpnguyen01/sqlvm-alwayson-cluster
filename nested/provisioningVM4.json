@@ -179,7 +179,7 @@
               "vhd": {
                 "uri": "[concat('http://',variables('sqlstorageName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-03','-Data-1.vhd')]"
               },
-              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-data-disk1')]",
+              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','-data-disk1')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": 1000,
@@ -272,7 +272,7 @@
               "vhd": {
                 "uri": "[concat('http://',variables('sqlstorageName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-04','-Data-1.vhd')]"
               },
-              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-data-disk1')]",
+              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-04','-data-disk1')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": 1000,
