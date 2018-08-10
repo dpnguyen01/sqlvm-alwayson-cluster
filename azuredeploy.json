@@ -77,22 +77,6 @@
       },
       "defaultValue": "Premium_LRS"
     },
-    "sqlAvailabilitySet": {
-      "type": "string",
-      "allowedValues": [
-        "std-sql-as",
-        "stdqa-sql-as",
-        "sec-sql-as",
-        "secqa-sql-as",
-        "dev-sql-as",
-        "dpt-sql-as",
-        "dptqa-sql-as"
-      ],
-      "metadata": {
-        "description": "The name of SQL Availability Set"
-      },
-      "defaultValue": "std-sql-as"
-    },
     "staticSubnet": {
       "type": "string",
       "allowedValues": [
@@ -100,7 +84,7 @@
         "10.122.14.0/23"
       ],
       "metadata": {
-        "description": "The address range of the subnet static IPs are allocated from in the new VNET"
+        "description": "The address range of the subnet static IPs are allocated from in the new VNET DEV-12.128/25, Prod-14.0/23"
       },
       "defaultValue": "10.122.12.128/25"
     },
@@ -111,7 +95,7 @@
         "10.122.14.0/23"
       ],
       "metadata": {
-        "description": "The address range of the SQL subnet created in the new VNET"
+        "description": "The address range of the SQL subnet created in the new VNET DEV-12.128/25, Prod-14.0/23"
       },
       "defaultValue": "10.122.12.128/25"
     },
@@ -120,7 +104,7 @@
       "metadata": {
         "description": "The IP address of the new SQL Server Internal Load Balancer"
       },
-      "defaultValue": "10.122.12.140"
+      "defaultValue": "10.122.12.175"
     },
     "deploymentPrefix": {
       "type": "string",
@@ -137,13 +121,6 @@
         "description": "The DNS Prefix for the Public IP Address for the Always On Cluster"
       },
       "defaultValue": "std"
-    },
-    "virtualNetworkName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of virtual network to be created"
-      },
-      "defaultValue": "ASU-UTO-USWest-01"
     },
     "subnetname": {
       "type": "string",
@@ -226,7 +203,7 @@
       "metadata": {
         "description": "The Sql AlwaysOn Group Name"
       },
-      "defaultValue": "std_sql_prod_ag"
+      "defaultValue": "std_sql_qa_ag"
     },
     "sqlAOListenerPort": {
       "type": "string",
@@ -240,7 +217,7 @@
       "metadata": {
         "description": "The Sql AG Listener Name"
       },
-      "defaultValue": "std_sql_prod_ag"
+      "defaultValue": "std_sql_qa_ag"
     },
     "sqlServerVersion": {
       "type": "string",
@@ -288,23 +265,24 @@
     }
   },
   "variables": {
+    "virtualNetworkName":"ASU-UTO-USWest-01",
     "DNSServerName":"infra-ritedc-01",
     "lbSettings": {
-      "sqlLBFE": "sqlLBFE",
-      "sqlLBBE": "sqlLBBE",
-      "sqlLBName": "sqlLoadBalancer"
+      "sqlLBBE": "[concat(parameters('deploymentPrefix'),'sqlLBBE')]",
+      "sqlLBFE": "[concat(parameters('deploymentPrefix'),'sqlLBFE')]",
+      "sqlLBName": "[concat(parameters('deploymentPrefix'),'sqlLoadBalancer')]"
     },
     "subnetNames": {
       "staticSubnetName": "[parameters('subnetname')]",
       "sqlSubnetName": "[parameters('subnetname')]"
     },
-    "SQLAOProbe": "SQLAlwaysOnEndPointProbe",
-    "sql1AddressName": "sql1IP",
-    "sql0AddressName": "sql0IP",
+    "SQLAOProbe": "[concat(parameters('deploymentPrefix'),'SQLAlwaysOnEndPointProbe')]",
+    "sql3AddressName": "[concat(parameters('deploymentPrefix'),'sql3ip')]",
+    "sql4AddressName": "[concat(parameters('deploymentPrefix'),'sql4ip')]",
     "vmSettings": {
       "adPDCVMName": "infra-ritedc-01",
       "availabilitySets": {
-        "sqlAvailabilitySetName": "[parameters('sqlAvailabilitySet')]"
+        "sqlAvailabilitySetName": "[concat(parameters('deploymentPrefix'),'-sql-as')]"
       },
       "noOfSqlVMs": 2,
       "vmContainerName": "vhds",
@@ -322,9 +300,9 @@
     "sqlAOEPName": "[concat(parameters('deploymentPrefix'),'-hadr')]",
     "sharePath": "[concat(parameters('deploymentPrefix'),'-fsw')]",
     "clusterName": "[concat(parameters('deploymentPrefix'),'-fc')]",
-    "sqlwNicName": "[concat(variables('vmSettings').sqlwVMName,'-nic')]",
-    "staticSubnetRef": "/subscriptions/11b2526a-0345-4b4b-bd7a-607d1e7f7639/resourceGroups/ASU-UTO-Infra-01/providers/Microsoft.Network/virtualNetworks/ASU-UTO-USWest-01/subnets/devqa-int-122.12.128-25",
-    "sqlSubnetRef": "/subscriptions/11b2526a-0345-4b4b-bd7a-607d1e7f7639/resourceGroups/ASU-UTO-Infra-01/providers/Microsoft.Network/virtualNetworks/ASU-UTO-USWest-01/subnets/devqa-int-122.12.128-25",
+    "sqlwNicName": "[concat(parameters('deploymentPrefix'),'-',variables('vmSettings').sqlwVMName,'-nic')]",
+    "staticSubnetRef": "[concat('/subscriptions/11b2526a-0345-4b4b-bd7a-607d1e7f7639/resourceGroups/ASU-UTO-Infra-01/providers/Microsoft.Network/virtualNetworks/ASU-UTO-USWest-01/subnets/',parameters('subnetname'))]",
+    "sqlSubnetRef": "[concat('/subscriptions/11b2526a-0345-4b4b-bd7a-607d1e7f7639/resourceGroups/ASU-UTO-Infra-01/providers/Microsoft.Network/virtualNetworks/ASU-UTO-USWest-01/subnets/',parameters('subnetname'))]",
     "ids": {
       "sqllbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]"
     },
@@ -362,9 +340,9 @@
         }
       }
     ],
-    "virtualNetworkNameWithSuffix": "[substring(concat(parameters('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
-    "sql1AddressNameWithSuffix": "[substring(concat(variables('sql1AddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
-    "sql0AddressNameWithSuffix": "[substring(concat(variables('sql0AddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
+    "virtualNetworkNameWithSuffix": "[substring(concat(variables('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
+    "sql3AddressNameWithSuffix": "[substring(concat(variables('sql3AddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
+    "sql4AddressNameWithSuffix": "[substring(concat(variables('sql4AddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
     "configuration": {
       "vnetwithDNSTemplateURL": "[concat(parameters('templatesBaseUrl'),'/vnet-with-dns-server.json')]",
       "nicTemplateURL": "[concat(parameters('templatesBaseUrl'),'/nic.json')]",
@@ -405,11 +383,11 @@
           "SqlStorageAccountType": {
             "value": "[parameters('sqlStorageAccountType')]"
           },
-          "sql1AddressNameWithSuffix": {
-            "value": "[variables('sql1AddressNameWithSuffix')]"
+          "sql3AddressNameWithSuffix": {
+            "value": "[variables('sql3AddressNameWithSuffix')]"
           },
-          "sql0AddressNameWithSuffix": {
-            "value": "[variables('sql0AddressNameWithSuffix')]"
+          "sql4AddressNameWithSuffix": {
+            "value": "[variables('sql4AddressNameWithSuffix')]"
           }
         }
       }
@@ -479,6 +457,9 @@
           "location": {
             "value": "[parameters('location')]"
           },
+          "deploymentPrefix": {
+            "value": "[parameters('deploymentPrefix')]"
+          },
           "sqlVMName": {
             "value": "[variables('vmSettings').sqlVMName]"
           },
@@ -491,11 +472,11 @@
           "sqlwNicName": {
             "value": "[variables('sqlwNicName')]"
           },
-          "sql1AddressNameWithSuffix": {
-            "value": "[variables('sql1AddressNameWithSuffix')]"
+          "sql3AddressNameWithSuffix": {
+            "value": "[variables('sql3AddressNameWithSuffix')]"
           },
-          "sql0AddressNameWithSuffix": {
-            "value": "[variables('sql0AddressNameWithSuffix')]"
+          "sql4AddressNameWithSuffix": {
+            "value": "[variables('sql4AddressNameWithSuffix')]"
           }
         }
       }
@@ -611,7 +592,7 @@
       }
     },
     {
-      "name": "UpdatingSQL0Nic",
+      "name": "UpdatingSQL4Nic",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
@@ -628,7 +609,7 @@
             "value": "[parameters('location')]"
           },
           "nicName": {
-            "value": "[concat(variables('vmSettings').sqlVMName, '0-nic')]"
+            "value": "[concat(parameters('deploymentPrefix'),'-',variables('vmSettings').sqlVMName, '0-nic')]"
           },
           "ipConfigurations": {
             "value": [
@@ -640,7 +621,7 @@
                     "id": "[variables('sqlSubnetRef')]"
                   },
                   "publicIpAddress": {
-                    "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', variables('sql0AddressNameWithSuffix'))]"
+                    "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', variables('sql4AddressNameWithSuffix'))]"
                   },
                   "loadBalancerBackendAddressPools": [
                     {
@@ -655,11 +636,11 @@
       }
     },
     {
-      "name": "UpdatingSQL1Nic",
+      "name": "UpdatingSQL3Nic",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "Microsoft.Resources/deployments/UpdatingSQL0Nic"
+        "Microsoft.Resources/deployments/UpdatingSQL4Nic"
       ],
       "properties": {
         "mode": "Incremental",
@@ -672,7 +653,7 @@
             "value": "[parameters('location')]"
           },
           "nicName": {
-            "value": "[concat(variables('vmSettings').sqlVMName, '1-nic')]"
+            "value": "[concat(parameters('deploymentPrefix'),'-',variables('vmSettings').sqlVMName, '1-nic')]"
           },
           "ipConfigurations": {
             "value": [
@@ -684,7 +665,7 @@
                     "id": "[variables('sqlSubnetRef')]"
                   },
                   "publicIpAddress": {
-                    "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', variables('sql1AddressNameWithSuffix'))]"
+                    "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', variables('sql3AddressNameWithSuffix'))]"
                   },
                   "loadBalancerBackendAddressPools": [
                     {
@@ -703,7 +684,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "Microsoft.Resources/deployments/UpdatingSQL0Nic"
+        "Microsoft.Resources/deployments/UpdatingSQL4Nic"
       ],
       "properties": {
         "mode": "Incremental",
@@ -791,6 +772,9 @@
         "parameters": {
           "sqlVMName": {
             "value": "[variables('vmSettings').sqlVMName]"
+          },
+          "deploymentPrefix": {
+            "value": "[parameters('deploymentPrefix')]"
           },
           "location": {
             "value": "[parameters('location')]"

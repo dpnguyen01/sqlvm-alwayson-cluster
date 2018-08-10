@@ -5,6 +5,9 @@
     "location": {
       "type": "string"
     },
+    "deploymentPrefix":{
+      "type": "string"
+    },
     "sqlVMName": {
       "type": "string"
     },
@@ -17,16 +20,16 @@
     "sqlwNicName": {
       "type": "string"
     },
-    "sql1AddressNameWithSuffix": {
+    "sql3AddressNameWithSuffix": {
       "type": "string"
     },
-    "sql0AddressNameWithSuffix": {
+    "sql4AddressNameWithSuffix": {
       "type": "string"
     }
   },
   "resources": [
     {
-      "name": "[concat(parameters('sqlVMName'),'1-nic')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-03','-nic')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[parameters('location')]",
       "apiVersion": "2015-06-15",
@@ -40,7 +43,7 @@
                 "id": "[parameters('sqlSubnetRef')]"
               },
               "publicIpAddress": {
-                "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', parameters('sql1AddressNameWithSuffix'))]"
+                "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', parameters('sql3AddressNameWithSuffix'))]"
               },
               "loadBalancerBackendAddressPools": [
                 {
@@ -53,7 +56,7 @@
       }
     },
     {
-      "name": "[concat(parameters('sqlVMName'),'0-nic')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-04','-nic')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[parameters('location')]",
       "apiVersion": "2015-06-15",
@@ -67,7 +70,7 @@
                 "id": "[parameters('sqlSubnetRef')]"
               },
               "publicIpAddress": {
-                "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', parameters('sql0AddressNameWithSuffix'))]"
+                "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', parameters('sql4AddressNameWithSuffix'))]"
               },
               "loadBalancerBackendAddressPools": [
                 {

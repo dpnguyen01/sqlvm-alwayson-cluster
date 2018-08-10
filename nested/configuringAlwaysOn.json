@@ -62,14 +62,20 @@
     "numberOfDisks": {
       "type": "string"
     },
+    "deploymentPrefix":{
+      "type": "string"
+    },
     "workloadType": {
       "type": "string"
     }
   },
+  "variables": {
+    "sqlwVMNameFull":"[concat(parameters('deploymentPrefix'),'-',parameters('sqlwVMName'),'-01')]"
+  },
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('sqlVMName'),'1/configuringAlwaysOn')]",
+      "name": "[concat(parameters('deploymentPrefix'),parameters('sqlVMName'),'1/configuringAlwaysOn')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "properties": {
@@ -83,10 +89,10 @@
           "properties": {
             "domainName": "[parameters('domainName')]",
             "clusterName": "[parameters('clusterName')]",
-            "sharePath": "[concat('\\\\',parameters('sqlwVMName'),'\\',parameters('sharePath'))]",
+            "sharePath": "[concat('\\\\',variables('sqlwVMNameFull'),'\\',parameters('sharePath'))]",
             "nodes": [
-              "[concat(parameters('sqlVMName'),'0')]",
-              "[concat(parameters('sqlVMName'),'1')]"
+              "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03')]",
+              "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03')]"
             ],
             "sqlAlwaysOnEndpointName": "[parameters('sqlAOEPName')]",
             "sqlAlwaysOnAvailabilityGroupName": "[parameters('sqlAOAGName')]",
