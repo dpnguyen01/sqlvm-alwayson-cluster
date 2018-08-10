@@ -65,12 +65,12 @@ configuration PrepareAlwaysOnSqlServer
             Ensure = "Present"
         }
 
-        WindowsFeature FailoverClusterTools 
-        { 
-            Ensure = "Present" 
+        WindowsFeature FailoverClusterTools
+        {
+            Ensure = "Present"
             Name = "RSAT-Clustering-Mgmt"
             DependsOn = "[WindowsFeature]FC"
-        } 
+        }
 
         WindowsFeature FCPS
         {
@@ -84,15 +84,15 @@ configuration PrepareAlwaysOnSqlServer
             Ensure = "Present"
         }
 
-        xWaitForADDomain DscForestWait 
-        { 
-            DomainName = $DomainName 
+        xWaitForADDomain DscForestWait
+        {
+            DomainName = $DomainName
             DomainUserCredential= $DomainCreds
-            RetryCount = $RetryCount 
-            RetryIntervalSec = $RetryIntervalSec 
+            RetryCount = $RetryCount
+            RetryIntervalSec = $RetryIntervalSec
 	        DependsOn = "[WindowsFeature]ADPS"
         }
-        
+
         xComputer DomainJoin
         {
             Name = $env:COMPUTERNAME
@@ -107,9 +107,9 @@ configuration PrepareAlwaysOnSqlServer
             Name = "SQL-Server-Database-Engine-TCP-In"
             DisplayName = "SQL Server Database Engine (TCP-In)"
             Description = "Inbound rule for SQL Server to allow TCP traffic for the Database Engine."
-            DisplayGroup = "SQL Server"
-            State = "Enabled"
-            Access = "Allow"
+            Group = "SQL Server"
+            Enabled= "True"
+            Action = "Allow"
             Protocol = "TCP"
             LocalPort = $DatabaseEnginePort -as [String]
             Ensure = "Present"
@@ -121,9 +121,9 @@ configuration PrepareAlwaysOnSqlServer
             Name = "SQL-Server-Database-Mirroring-TCP-In"
             DisplayName = "SQL Server Database Mirroring (TCP-In)"
             Description = "Inbound rule for SQL Server to allow TCP traffic for the Database Mirroring."
-            DisplayGroup = "SQL Server"
-            State = "Enabled"
-            Access = "Allow"
+            Group = "SQL Server"
+            Enabled= "True"
+            Action = "Allow"
             Protocol = "TCP"
             LocalPort = "5022"
             Ensure = "Present"
@@ -135,9 +135,9 @@ configuration PrepareAlwaysOnSqlServer
             Name = "SQL-Server-Availability-Group-Listener-TCP-In"
             DisplayName = "SQL Server Availability Group Listener (TCP-In)"
             Description = "Inbound rule for SQL Server to allow TCP traffic for the Availability Group listener."
-            DisplayGroup = "SQL Server"
-            State = "Enabled"
-            Access = "Allow"
+            Group = "SQL Server"
+            Enabled= "True"
+            Action = "Allow"
             Protocol = "TCP"
             LocalPort = "59999"
             Ensure = "Present"
@@ -171,7 +171,7 @@ configuration PrepareAlwaysOnSqlServer
             Credential = $Admincreds
             DependsOn = "[xADUser]CreateSqlServerServiceAccount"
         }
-        
+
         xSqlTsqlEndpoint AddSqlServerEndpoint
         {
             InstanceName = "MSSQLSERVER"
@@ -199,7 +199,7 @@ configuration PrepareAlwaysOnSqlServer
             DependsOn = "[xSqlLogin]AddSqlServerServiceAccountToSysadminServerRole"
         }
 
-        LocalConfigurationManager 
+        LocalConfigurationManager
         {
             RebootNodeIfNeeded = $true
         }
@@ -207,7 +207,7 @@ configuration PrepareAlwaysOnSqlServer
     }
 }
 function Get-NetBIOSName
-{ 
+{
     [OutputType([string])]
     param(
         [string]$DomainName
