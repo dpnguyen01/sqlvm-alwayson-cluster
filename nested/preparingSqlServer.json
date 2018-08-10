@@ -5,6 +5,9 @@
     "sqlVMName": {
       "type": "string"
     },
+    "deploymentPrefix":{
+      "type": "string"
+    },
     "location": {
       "type": "string"
     },
@@ -86,7 +89,7 @@
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('sqlwVMName'),'/CreateFileShareWitness')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlwVMName'),'-01','/CreateFileShareWitness')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "properties": {
@@ -116,7 +119,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('sqlVMName'),'0/SqlVmIaasExtension')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','/SqlVmIaasExtension')]",
       "location": "[parameters('location')]",
       "properties": {
         "type": "SqlIaaSAgent",
@@ -145,7 +148,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('sqlVMName'),'1/SqlVmIaasExtension')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-04','/SqlVmIaasExtension')]",
       "location": "[parameters('location')]",
       "properties": {
         "type": "SqlIaaSAgent",
@@ -173,12 +176,12 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('sqlVMName'),'0/sqlAOPrepare')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','/sqlAOPrepare')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('sqlwVMName'),'/extensions/CreateFileShareWitness')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('sqlVMName'),'0/extensions/SqlVmIaasExtension')]"
+        "[concat(parameters('deploymentPrefix'),'-',parameters('sqlwVMName'),'-01','/CreateFileShareWitness')]",
+        "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','/SqlVmIaasExtension')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",

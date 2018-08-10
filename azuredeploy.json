@@ -696,6 +696,9 @@
           "sqlVMName": {
             "value": "[variables('vmSettings').sqlVMName]"
           },
+          "deploymentPrefix":{
+            "value": "[parameters('deploymentPrefix')]"
+          },
           "location": {
             "value": "[parameters('location')]"
           },
