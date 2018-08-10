@@ -609,7 +609,7 @@
             "value": "[parameters('location')]"
           },
           "nicName": {
-            "value": "[concat(parameters('deploymentPrefix'),'-',variables('vmSettings').sqlVMName, '0-nic')]"
+            "value": "[concat(parameters('deploymentPrefix'),'-',variables('vmSettings').sqlVMName, '-04-nic')]"
           },
           "ipConfigurations": {
             "value": [
@@ -653,7 +653,7 @@
             "value": "[parameters('location')]"
           },
           "nicName": {
-            "value": "[concat(parameters('deploymentPrefix'),'-',variables('vmSettings').sqlVMName, '1-nic')]"
+            "value": "[concat(parameters('deploymentPrefix'),'-',variables('vmSettings').sqlVMName, '-03-nic')]"
           },
           "ipConfigurations": {
             "value": [
