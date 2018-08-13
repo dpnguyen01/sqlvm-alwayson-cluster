@@ -10,12 +10,6 @@
     },
     "SqlStorageAccountType": {
       "type": "string"
-    },
-    "sql3AddressNameWithSuffix": {
-      "type": "string"
-    },
-    "sql4AddressNameWithSuffix": {
-      "type": "string"
     }
   },
   "resources": [
@@ -44,24 +38,6 @@
       "location": "[parameters('location')]",
       "properties": {
         "accountType": "Standard_LRS"
-      }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[parameters('sql3AddressNameWithSuffix')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic"
-      }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[parameters('sql4AddressNameWithSuffix')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic"
       }
     }
   ],

@@ -99,13 +99,6 @@
       },
       "defaultValue": "10.122.12.128/25"
     },
-    "sqlLBIPAddress": {
-      "type": "string",
-      "metadata": {
-        "description": "The IP address of the new SQL Server Internal Load Balancer"
-      },
-      "defaultValue": "10.122.12.175"
-    },
     "deploymentPrefix": {
       "type": "string",
       "allowedValues": [
@@ -309,6 +302,7 @@
     "derivedIds": {
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
       "sqllbFEConfigID": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
+      "sqllbFEConfigIP": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE,'/properties/privateIPAddress')]",
       "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]"
     },
     "SQL2012SP4-WS2012R2-BYOL": "Enterprise",
@@ -349,7 +343,7 @@
       "vnetSetupURL": "[concat(parameters('templatesBaseUrl'),'/vnet-new.json')]",
       "setupLBsUrl": "[concat(parameters('templatesBaseUrl'),'/setupLBs.json')]",
       "creatingNicsUrl": "[concat(parameters('templatesBaseUrl'),'/creatingNICS.json')]",
-      "storageAccountVirtualNetworkPublicIP": "[concat(parameters('templatesBaseUrl'),'/storageAccountVirtualNetworkPublicIP.json')]",
+      "storageAccount": "[concat(parameters('templatesBaseUrl'),'/storageAccount.json')]",
       "provisioningVMs": "[concat(parameters('templatesBaseUrl'),'/provisioningVM',parameters('numberOfSqlVMDisks'),'.json')]",
       "preparingAlwaysOnSqlServer": "[concat(parameters('templatesBaseUrl'),'/preparingSqlServer.json')]",
       "configuringAlwaysOn": "[concat(parameters('templatesBaseUrl'),'/configuringAlwaysOn.json')]",
@@ -363,14 +357,14 @@
   },
   "resources": [
     {
-      "name": "StorageAccountVirtualNetworkPublicIP",
+      "name": "storageAccount",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
-      "comments": "This resource will create storage accounts for SQL Server, File Share Witness and Diagnostics. It will also create the Virtual Network and public IP addresses",
+      "comments": "This resource will create storage accounts for SQL Server, File Share Witness and Diagnostics.",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('configuration').storageAccountVirtualNetworkPublicIP]",
+          "uri": "[variables('configuration').storageAccount]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -382,12 +376,6 @@
           },
           "SqlStorageAccountType": {
             "value": "[parameters('sqlStorageAccountType')]"
-          },
-          "sql3AddressNameWithSuffix": {
-            "value": "[variables('sql3AddressNameWithSuffix')]"
-          },
-          "sql4AddressNameWithSuffix": {
-            "value": "[variables('sql4AddressNameWithSuffix')]"
           }
         }
       }
@@ -396,9 +384,9 @@
       "name": "LoadBalancers",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
-      "comments": "Create Load Balancers for SQL and DC",
+      "comments": "Create Load Balancer for SQL",
       "dependsOn": [
-        "Microsoft.Resources/deployments/StorageAccountVirtualNetworkPublicIP"
+        "Microsoft.Resources/deployments/storageAccount"
       ],
       "properties": {
         "mode": "Incremental",
@@ -415,9 +403,6 @@
           },
           "sqlLBFE": {
             "value": "[variables('lbSettings').sqlLBFE]"
-          },
-          "sqlLBIPAddress": {
-            "value": "[parameters('sqlLBIPAddress')]"
           },
           "staticSubnetRef": {
             "value": "[variables('sqlSubnetRef')]"
@@ -471,12 +456,6 @@
           },
           "sqlwNicName": {
             "value": "[variables('sqlwNicName')]"
-          },
-          "sql3AddressNameWithSuffix": {
-            "value": "[variables('sql3AddressNameWithSuffix')]"
-          },
-          "sql4AddressNameWithSuffix": {
-            "value": "[variables('sql4AddressNameWithSuffix')]"
           }
         }
       }
@@ -620,9 +599,6 @@
                   "subnet": {
                     "id": "[variables('sqlSubnetRef')]"
                   },
-                  "publicIpAddress": {
-                    "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', variables('sql4AddressNameWithSuffix'))]"
-                  },
                   "loadBalancerBackendAddressPools": [
                     {
                       "id": "[variables('derivedIds').sqlBEAddressPoolID]"
@@ -663,9 +639,6 @@
                   "privateIPAllocationMethod": "Dynamic",
                   "subnet": {
                     "id": "[variables('sqlSubnetRef')]"
-                  },
-                  "publicIpAddress": {
-                    "id": "[resourceId(resourceGroup().Name,'Microsoft.Network/publicIpAddresses', variables('sql3AddressNameWithSuffix'))]"
                   },
                   "loadBalancerBackendAddressPools": [
                     {
@@ -825,7 +798,7 @@
             "value": "[variables('lbSettings').sqlLBName]"
           },
           "sqlLBIPAddress": {
-            "value": "[parameters('sqlLBIPAddress')]"
+            "value": "[variables('derivedIds').sqllbFEConfigIP]"
           },
           "DNSServerName": {
             "value": "[variables('DNSServerName')]"

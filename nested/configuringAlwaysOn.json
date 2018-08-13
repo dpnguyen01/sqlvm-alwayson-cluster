@@ -75,14 +75,14 @@
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('deploymentPrefix'),parameters('sqlVMName'),'1/configuringAlwaysOn')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-04/configuringAlwaysOn')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "properties": {
         "publisher": "Microsoft.Powershell",
         "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
+        "typeHandlerVersion": "2.76",
+        "autoUpgradeMinorVersion": true,
         "settings": {
           "modulesURL": "[parameters('createClusterModulesURL')]",
           "configurationFunction": "[parameters('createClusterConfigurationFunction')]",
@@ -92,7 +92,7 @@
             "sharePath": "[concat('\\\\',variables('sqlwVMNameFull'),'\\',parameters('sharePath'))]",
             "nodes": [
               "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03')]",
-              "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03')]"
+              "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-04')]"
             ],
             "sqlAlwaysOnEndpointName": "[parameters('sqlAOEPName')]",
             "sqlAlwaysOnAvailabilityGroupName": "[parameters('sqlAOAGName')]",
@@ -101,8 +101,8 @@
             "databaseNames": "AutoHa-sample",
             "lbName": "[parameters('sqlLBName')]",
             "lbAddress": "[parameters('sqlLBIPAddress')]",
-            "primaryReplica": "[concat(parameters('sqlVMName'),'1')]",
-            "secondaryReplica": "[concat(parameters('sqlVMName'),'0')]",
+            "primaryReplica": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03')]",
+            "secondaryReplica": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-04')]",
             "dnsServerName": "[parameters('dnsServerName')]",
             "adminCreds": {
               "userName": "[parameters('adminUsername')]",

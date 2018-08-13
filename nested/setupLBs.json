@@ -11,9 +11,6 @@
     "sqlLBFE": {
       "type": "string"
     },
-    "sqlLBIPAddress": {
-      "type": "string"
-    },
     "staticSubnetRef": {
       "type": "string"
     },
@@ -44,8 +41,7 @@
           {
             "name": "[parameters('sqlLBFE')]",
             "properties": {
-              "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[parameters('sqlLBIPAddress')]",
+              "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[parameters('staticSubnetRef')]"
               }
