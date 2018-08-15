@@ -283,7 +283,7 @@
       "windowsDiskSize": 128,
       "sqlDiskSize": 1000
     },
-    "sqlStorageAccountName": "[concat(parameters('deploymentPrefix')'premlrs')]",
+    "sqlStorageAccountName": "[concat(parameters('deploymentPrefix'),'premlrs')]",
     "sqlAOEPName": "[concat(parameters('deploymentPrefix'),'-hadr')]",
     "sharePath": "[concat(parameters('deploymentPrefix'),'-fsw')]",
     "clusterName": "[concat(parameters('deploymentPrefix'),'-fc')]",
