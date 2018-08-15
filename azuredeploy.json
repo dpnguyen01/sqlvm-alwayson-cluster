@@ -328,9 +328,9 @@
         }
       }
     ],
-    "virtualNetworkNameWithSuffix": "[substring(concat(variables('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
-    "sql3AddressNameWithSuffix": "[substring(concat(variables('sql3AddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
-    "sql4AddressNameWithSuffix": "[substring(concat(variables('sql4AddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
+    "virtualNetworkNameWithSuffix": "[substring(concat(variables('virtualNetworkName'), uniqueString(variables('sqlStorageAccountName'))),0,15)]",
+    "sql3AddressNameWithSuffix": "[substring(concat(variables('sql3AddressName'), uniqueString(variables('sqlStorageAccountName'))),0,15)]",
+    "sql4AddressNameWithSuffix": "[substring(concat(variables('sql4AddressName'), uniqueString(variables('sqlStorageAccountName'))),0,15)]",
     "configuration": {
       "vnetwithDNSTemplateURL": "[concat(parameters('templatesBaseUrl'),'/vnet-with-dns-server.json')]",
       "nicTemplateURL": "[concat(parameters('templatesBaseUrl'),'/nic.json')]",
@@ -366,7 +366,7 @@
             "value": "[parameters('location')]"
           },
           "sqlStorageAccountName": {
-            "value": "[parameters('sqlStorageAccountName')]"
+            "value": "[variables('sqlStorageAccountName')]"
           },
           "SqlStorageAccountType": {
             "value": "[parameters('sqlStorageAccountType')]"
@@ -475,7 +475,7 @@
             "value": "[parameters('deploymentPrefix')]"
           },
           "sqlStorageAccountName": {
-            "value": "[parameters('sqlStorageAccountName')]"
+            "value": "[variables('sqlStorageAccountName')]"
           },
           "location": {
             "value": "[parameters('location')]"
