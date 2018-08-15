@@ -61,7 +61,7 @@
     }
   },
   "variables": {
-    "diagstorageName": "[concat(parameters('deploymentPrefix'),'bootdiag',uniquestring(parameters('sqlStorageAccountName')))]"
+    "diagstorageName": "[concat(parameters('deploymentPrefix'),'-bootdiag')]"
   },
   "resources": [
     {
