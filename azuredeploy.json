@@ -60,13 +60,6 @@
         "description": "The SQL Server Service Account password"
       }
     },
-    "sqlStorageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of Sql Server Storage Account"
-      },
-      "defaultValue":"asuinfauswestsqllrsp"
-    },
     "sqlStorageAccountType": {
       "type": "string",
       "allowedValues": [
@@ -131,14 +124,14 @@
       "metadata": {
         "description": "Linked Templates base url"
       },
-      "defaultValue": "https://raw.githubusercontent.com/bartrumb/sqlvm-alwayson-cluster/master/nested"
+      "defaultValue": "https://raw.githubusercontent.com/dpnguyen01/sqlvm-alwayson-cluster/master/nested"
     },
     "scriptsBaseUrl": {
       "type": "string",
       "metadata": {
         "description": "DSC Scripts base url"
       },
-      "defaultValue": "https://raw.githubusercontent.com/bartrumb/sqlvm-alwayson-cluster/master/scripts"
+      "defaultValue": "https://raw.githubusercontent.com/dpnguyen01/sqlvm-alwayson-cluster/master/scripts"
     },
     "autoPatchingDay": {
       "type": "string",
@@ -280,7 +273,7 @@
       "noOfSqlVMs": 2,
       "vmContainerName": "vhds",
             "sqlVMName": "sql",
-      "sqlwVMName": "fs",
+      "sqlwVMName": "fsw",
       "windowsImagePublisher": "MicrosoftWindowsServer",
       "windowsImageOffer": "WindowsServer",
       "windowsImageSKU": "2012-R2-Datacenter",
@@ -290,6 +283,7 @@
       "windowsDiskSize": 128,
       "sqlDiskSize": 1000
     },
+    "sqlStorageAccountName": "[concat(parameters('deploymentPrefix')'premlrs')]",
     "sqlAOEPName": "[concat(parameters('deploymentPrefix'),'-hadr')]",
     "sharePath": "[concat(parameters('deploymentPrefix'),'-fsw')]",
     "clusterName": "[concat(parameters('deploymentPrefix'),'-fc')]",

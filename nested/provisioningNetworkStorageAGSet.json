@@ -66,7 +66,7 @@
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[concat(uniquestring(parameters('sqlStorageAccountName')), 'fsw')]",
+      "name": "[concat(,parameters('deploymentPrefix'),'fsw',uniquestring(parameters('sqlStorageAccountName')))]",
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]",
       "properties": {
@@ -75,7 +75,7 @@
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[concat(uniquestring(parameters('sqlStorageAccountName')), 'diag')]",
+      "name": "[concat(,parameters('deploymentPrefix'),'bootdiag',uniquestring(parameters('sqlStorageAccountName'))))]",
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]",
       "properties": {

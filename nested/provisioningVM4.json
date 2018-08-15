@@ -62,8 +62,8 @@
   },
   "variables": {
     "sqlstorageName": "[parameters('sqlStorageAccountName')]",
-    "fwstorageName": "[concat(uniquestring(parameters('sqlStorageAccountName')), 'fsw')]",
-    "diagstorageName": "[concat(uniquestring(parameters('sqlStorageAccountName')), 'diag')]"
+    "fwstorageName": "[concat(,parameters('deploymentPrefix'),'fsw',uniquestring(parameters('sqlStorageAccountName')))]",
+    "diagstorageName": "[concat(parameters('deploymentPrefix'),'bootdiag',uniquestring(parameters('sqlStorageAccountName')))]"
   },
   "resources": [
     {
