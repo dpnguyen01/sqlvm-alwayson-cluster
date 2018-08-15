@@ -24,7 +24,7 @@
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "bootdiag",
+      "name": "[concat('bootdiag',uniquestring(parameters('sqlStorageAccountName')))]",
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]",
       "properties": {
