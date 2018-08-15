@@ -61,7 +61,7 @@
     }
   },
   "variables": {
-    "diagstorageName": "[concat(parameters('deploymentPrefix'),'-bootdiag')]"
+    "diagstorageName": "bootdiag"
   },
   "resources": [
     {
