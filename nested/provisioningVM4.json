@@ -78,7 +78,7 @@
      }
     },
     {
-      "apiVersion": "2018-02-01",
+      "apiVersion": "2018-04-01",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlwVMName'),'-01')]",
       "location": "[parameters('location')]",
@@ -290,8 +290,8 @@
               "lun": 1
             },
             {
-              "vhd": {
-                "uri": "[concat('http://',variables('sqlstorageName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('sqlVMName'), '-04', '-Data-3.vhd')]"
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
               },
               "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-04','-data-disk3')]",
               "caching": "None",
