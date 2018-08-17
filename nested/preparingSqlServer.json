@@ -86,36 +86,6 @@
     "8": "Monday",
     "0": "Everyday"
   },
-  "resources": [
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlwVMName'),'-01','/CreateFileShareWitness')]",
-      "apiVersion": "2015-06-15",
-      "location": "[parameters('location')]",
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.76",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "modulesURL": "[parameters('fswModulesURL')]",
-          "configurationFunction": "[parameters('fswConfigurationFunction')]",
-          "properties": {
-            "domainName": "[parameters('domainName')]",
-            "SharePath": "[parameters('sharePath')]",
-            "adminCreds": {
-              "userName": "[parameters('adminUsername')]",
-              "password": "privateSettingsRef:adminPassword"
-            }
-          }
-        },
-        "protectedSettings": {
-          "items": {
-            "adminPassword": "[parameters('adminPassword')]"
-          }
-        }
-      }
-    },
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
@@ -180,7 +150,6 @@
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('deploymentPrefix'),'-',parameters('sqlwVMName'),'-01','/extensions/CreateFileShareWitness')]",
         "[concat('Microsoft.Compute/virtualMachines/',parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','/extensions/SqlVmIaasExtension')]"
       ],
       "properties": {
