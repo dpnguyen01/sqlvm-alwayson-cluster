@@ -13,7 +13,13 @@
       },
       "sqlServerServiceAccountPassword":{
          "value":"GEN-PASSWORD"
-      },
+      },    
+      "sqlServerServiceAccountUserName1":{
+        "value":"sqlservice"
+     },
+     "sqlServerServiceAccountPassword1":{
+        "value":"GEN-PASSWORD"
+     },  
       "sqlStorageAccountType":{
          "value":"Premium_LRS"
       },
