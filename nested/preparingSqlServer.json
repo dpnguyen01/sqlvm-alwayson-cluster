@@ -35,6 +35,12 @@
     "sqlServerServiceAccountPassword": {
       "type": "securestring"
     },
+    "sqlServerServiceAccountUserName1": {
+      "type": "string"
+    },
+    "sqlServerServiceAccountPassword1": {
+      "type": "securestring"
+    },
     "sharePath": {
       "type": "string"
     },
