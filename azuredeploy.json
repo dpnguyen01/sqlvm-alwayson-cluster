@@ -273,7 +273,7 @@
       "noOfSqlVMs": 2,
       "vmContainerName": "vhds",
             "sqlVMName": "sql",
-      "sqlwVMName": "sql-fsw",
+      "sqlwVMName": "fsw",
       "windowsImagePublisher": "MicrosoftWindowsServer",
       "windowsImageOffer": "WindowsServer",
       "windowsImageSKU": "2012-R2-Datacenter",
@@ -285,7 +285,7 @@
     },
     "sqlStorageAccountName": "[concat(parameters('deploymentPrefix'),'premlrs')]",
     "sqlAOEPName": "[concat(parameters('deploymentPrefix'),'-hadr')]",
-    "sharePath": "[concat(parameters('deploymentPrefix'),'-sql-fsw')]",
+    "sharePath": "[concat(parameters('deploymentPrefix'),'-fsw')]",
     "clusterName": "[concat(parameters('deploymentPrefix'),'-fc')]",
     "sqlwNicName": "[concat(parameters('deploymentPrefix'),'-',variables('vmSettings').sqlwVMName,'-nic')]",
     "staticSubnetRef": "[concat('/subscriptions/11b2526a-0345-4b4b-bd7a-607d1e7f7639/resourceGroups/ASU-UTO-Infra-01/providers/Microsoft.Network/virtualNetworks/ASU-UTO-USWest-01/subnets/',parameters('subnetname'))]",
@@ -725,7 +725,7 @@
           }
         }
       }
-    },
+    }
   ],
   "outputs": {}
 }
