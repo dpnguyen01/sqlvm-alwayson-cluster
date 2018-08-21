@@ -224,7 +224,7 @@
         "protectedSettings": {
           "items": {
             "adminPassword": "[parameters('adminPassword')]",
-            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]"
+            "sqlServerServiceAccountPassword1": "[parameters('sqlServerServiceAccountPassword1')]"
           }
         }
       }
