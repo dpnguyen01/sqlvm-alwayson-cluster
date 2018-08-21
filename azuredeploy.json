@@ -50,14 +50,27 @@
     "sqlServerServiceAccountUserName": {
       "type": "string",
       "metadata": {
-        "description": "The SQL Server Service Account name"
+        "description": "The SQL Server Service Account name for 03"
       },
       "defaultValue": "sqlservice"
     },
     "sqlServerServiceAccountPassword": {
       "type": "securestring",
       "metadata": {
-        "description": "The SQL Server Service Account password"
+        "description": "The SQL Server Service Account password for 03"
+      }
+    },
+    "sqlServerServiceAccountUserName1": {
+      "type": "string",
+      "metadata": {
+        "description": "The SQL Server Service Account name for 04"
+      },
+      "defaultValue": "sqlservice"
+    },
+    "sqlServerServiceAccountPassword1": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The SQL Server Service Account password for 04"
       }
     },
     "sqlStorageAccountType": {
@@ -693,6 +706,12 @@
           "sqlServerServiceAccountPassword": {
             "value": "[parameters('sqlServerServiceAccountPassword')]"
           },
+          "sqlServerServiceAccountUserName1": {
+            "value": "[parameters('sqlServerServiceAccountUserName1')]"
+          },
+          "sqlServerServiceAccountPassword1": {
+            "value": "[parameters('sqlServerServiceAccountPassword1')]"
+          },
           "sharePath": {
             "value": "[variables('sharePath')]"
           },
@@ -729,3 +748,4 @@
   ],
   "outputs": {}
 }
+

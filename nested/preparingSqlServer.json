@@ -208,8 +208,8 @@
               "password": "privateSettingsRef:AdminPassword"
             },
             "sqlServiceCreds": {
-              "userName": "[parameters('sqlServerServiceAccountUserName')]",
-              "password": "privateSettingsRef:SqlServerServiceAccountPassword"
+              "userName": "[parameters('sqlServerServiceAccountUserName1')]",
+              "password": "privateSettingsRef:SqlServerServiceAccountPassword1"
             },
             "NumberOfDisks": "[parameters('numberOfDisks')]",
             "WorkloadType": "[parameters('workloadType')]"
