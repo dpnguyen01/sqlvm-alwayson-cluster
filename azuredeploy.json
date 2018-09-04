@@ -47,6 +47,13 @@
       },
       "defaultValue": "asurite.ad.asu.edu"
     },
+    "OUPath": {
+      "type": "string",
+      "metadata": {
+        "description": "The distinguished name of the organizational unit to join."
+      },
+      "defaultValue": "OU=M.UTO.Servers,OU=M.UTO,DC=asurite,DC=ad,DC=asu,DC=edu"
+    },
     "sqlServerServiceAccountUserName": {
       "type": "string",
       "metadata": {
@@ -505,6 +512,9 @@
           "domainName": {
             "value": "[parameters('domainName')]"
           },
+          "OUPath": {
+            "value": "[parameters('OUPath')]"
+          },
           "sqlVMName": {
             "value": "[variables('vmSettings').sqlVMName]"
           },
@@ -690,6 +700,9 @@
           },
           "domainName": {
             "value": "[parameters('domainName')]"
+          },
+          "OUPath": {
+            "value": "[parameters('OUPath')]"
           },
           "sqlAOPrepareModulesURL": {
             "value": "[variables('configuration').sqlAOPrepareModulesURL]"

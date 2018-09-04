@@ -46,7 +46,6 @@ configuration PrepareAlwaysOnSqlServer
         $RebootVirtualMachine = $true
     }
 
-    WaitForSqlSetup
 
     Node localhost
     {
@@ -98,110 +97,8 @@ configuration PrepareAlwaysOnSqlServer
             Name = $env:COMPUTERNAME
             DomainName = $DomainName
             Credential = $DomainCreds
+            JoinOU = $OUPath
 	        DependsOn = "[xWaitForADDomain]DscForestWait"
-        }
-
-        xFirewall DatabaseEngineFirewallRule
-        {
-            Direction = "Inbound"
-            Name = "SQL-Server-Database-Engine-TCP-In"
-            DisplayName = "SQL Server Database Engine (TCP-In)"
-            Description = "Inbound rule for SQL Server to allow TCP traffic for the Database Engine."
-            Group = "SQL Server"
-            Enabled= "True"
-            Action = "Allow"
-            Protocol = "TCP"
-            LocalPort = $DatabaseEnginePort -as [String]
-            Ensure = "Present"
-        }
-
-        xFirewall DatabaseMirroringFirewallRule
-        {
-            Direction = "Inbound"
-            Name = "SQL-Server-Database-Mirroring-TCP-In"
-            DisplayName = "SQL Server Database Mirroring (TCP-In)"
-            Description = "Inbound rule for SQL Server to allow TCP traffic for the Database Mirroring."
-            Group = "SQL Server"
-            Enabled= "True"
-            Action = "Allow"
-            Protocol = "TCP"
-            LocalPort = "5022"
-            Ensure = "Present"
-        }
-
-        xFirewall ListenerFirewallRule
-        {
-            Direction = "Inbound"
-            Name = "SQL-Server-Availability-Group-Listener-TCP-In"
-            DisplayName = "SQL Server Availability Group Listener (TCP-In)"
-            Description = "Inbound rule for SQL Server to allow TCP traffic for the Availability Group listener."
-            Group = "SQL Server"
-            Enabled= "True"
-            Action = "Allow"
-            Protocol = "TCP"
-            LocalPort = "59999"
-            Ensure = "Present"
-        }
-
-        xSqlLogin AddDomainAdminAccountToSysadminServerRole
-        {
-            Name = $DomainCreds.UserName
-            LoginType = "WindowsUser"
-            ServerRoles = "sysadmin"
-            Enabled = $true
-            Credential = $Admincreds
-        }
-
-        xADUser CreateSqlServerServiceAccount
-        {
-            DomainAdministratorCredential = $DomainCreds
-            DomainName = $DomainName
-            UserName = $SQLServicecreds.UserName
-            Password = $SQLServicecreds
-            Ensure = "Present"
-            DependsOn = "[xSqlLogin]AddDomainAdminAccountToSysadminServerRole"
-        }
-
-        xSqlLogin AddSqlServerServiceAccountToSysadminServerRole
-        {
-            Name = $SQLCreds.UserName
-            LoginType = "WindowsUser"
-            ServerRoles = "sysadmin"
-            Enabled = $true
-            Credential = $Admincreds
-            DependsOn = "[xADUser]CreateSqlServerServiceAccount"
-        }
-
-        xSqlTsqlEndpoint AddSqlServerEndpoint
-        {
-            InstanceName = "MSSQLSERVER"
-            PortNumber = $DatabaseEnginePort
-            SqlAdministratorCredential = $Admincreds
-            DependsOn = "[xSqlLogin]AddSqlServerServiceAccountToSysadminServerRole"
-        }
-
-        xSQLServerStorageSettings AddSQLServerStorageSettings
-        {
-            InstanceName = "MSSQLSERVER"
-            OptimizationType = $WorkloadType
-            DependsOn = "[xSqlTsqlEndpoint]AddSqlServerEndpoint"
-        }
-
-        xSqlServer ConfigureSqlServerWithAlwaysOn
-        {
-            InstanceName = $env:COMPUTERNAME
-            SqlAdministratorCredential = $Admincreds
-            ServiceCredential = $SQLCreds
-            MaxDegreeOfParallelism = 1
-            FilePath = "F:\DATA"
-            LogPath = "F:\LOG"
-            DomainAdministratorCredential = $DomainFQDNCreds
-            DependsOn = "[xSqlLogin]AddSqlServerServiceAccountToSysadminServerRole"
-        }
-
-        LocalConfigurationManager
-        {
-            RebootNodeIfNeeded = $true
         }
 
     }
@@ -226,22 +123,6 @@ function Get-NetBIOSName
         }
         else {
             return $DomainName
-        }
-    }
-}
-function WaitForSqlSetup
-{
-    # Wait for SQL Server Setup to finish before proceeding.
-    while ($true)
-    {
-        try
-        {
-            Get-ScheduledTaskInfo "\ConfigureSqlImageTasks\RunConfigureImage" -ErrorAction Stop
-            Start-Sleep -Seconds 5
-        }
-        catch
-        {
-            break
         }
     }
 }

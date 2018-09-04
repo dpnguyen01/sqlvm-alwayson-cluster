@@ -17,6 +17,9 @@
     "domainName": {
       "type": "string"
     },
+    "OUPath": {
+      "type": "string"
+    },
     "sqlAOEPName": {
       "type": "string"
     },
@@ -88,6 +91,7 @@
           "configurationFunction": "[parameters('createClusterConfigurationFunction')]",
           "properties": {
             "domainName": "[parameters('domainName')]",
+            "OUPath": "[parameters('OUPath')]",
             "clusterName": "[parameters('clusterName')]",
             "sharePath": "[concat('\\\\',variables('sqlwVMNameFull'),'\\',parameters('sharePath'))]",
             "nodes": [

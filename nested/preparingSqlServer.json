@@ -20,6 +20,9 @@
     "domainName": {
       "type": "string"
     },
+    "OUPath": {
+      "type": "string"
+    },
     "sqlAOPrepareModulesURL": {
       "type": "string"
     },
@@ -96,7 +99,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','/SqlVmIaasExtension')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n3','/SqlVmIaasExtension')]",
       "location": "[parameters('location')]",
       "properties": {
         "type": "SqlIaaSAgent",
@@ -125,7 +128,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-04','/SqlVmIaasExtension')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n4','/SqlVmIaasExtension')]",
       "location": "[parameters('location')]",
       "properties": {
         "type": "SqlIaaSAgent",
@@ -153,11 +156,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','/sqlAOPrepare')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n3','/sqlAOPrepare')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','/extensions/SqlVmIaasExtension')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n3','/extensions/SqlVmIaasExtension')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -169,6 +172,7 @@
           "configurationFunction": "[parameters('sqlAOPrepareConfigurationFunction')]",
           "properties": {
             "domainName": "[parameters('domainName')]",
+            "OUPath": "[parameters('OUPath')]",
             "sqlAlwaysOnEndpointName": "[parameters('sqlAOEPName')]",
             "adminCreds": {
               "userName": "[parameters('adminUsername')]",
@@ -192,11 +196,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-04','/sqlAOPrepare')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n4','/sqlAOPrepare')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-04','/extensions/SqlVmIaasExtension')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n4','/extensions/SqlVmIaasExtension')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -208,6 +212,7 @@
           "configurationFunction": "[parameters('sqlAOPrepareConfigurationFunction')]",
           "properties": {
             "domainName": "[parameters('domainName')]",
+            "OUPath": "[parameters('OUPath')]",
             "sqlAlwaysOnEndpointName": "[parameters('sqlAOEPName')]",
             "adminCreds": {
               "userName": "[parameters('adminUsername')]",

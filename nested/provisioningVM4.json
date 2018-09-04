@@ -80,7 +80,7 @@
     {
       "apiVersion": "2018-04-01",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03')]",
+      "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n3')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/availabilitySets/',parameters('sqlAvailabilitySetName'))]"
@@ -93,7 +93,7 @@
           "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('sqlAvailabilitySetName'))]"
         },
         "osProfile": {
-          "computerName": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03')]",
+          "computerName": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n3')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -105,7 +105,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','-osdisk1')]",
+            "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n3','-osdisk1')]",
             "managedDisk": {
               "storageAccountType": "Premium_LRS"
             },
@@ -117,7 +117,7 @@
               "managedDisk": {
                 "storageAccountType": "Premium_LRS"
               },
-              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','-data-disk1')]",
+              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n3','-data-disk1')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": 1000,
@@ -127,7 +127,7 @@
               "managedDisk": {
                 "storageAccountType": "Premium_LRS"
               },
-              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-03','-data-disk2')]",
+              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'),'-n3','-data-disk2')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": 1000,
@@ -137,7 +137,7 @@
               "managedDisk": {
                 "storageAccountType": "Premium_LRS"
               },
-              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-03','-data-disk3')]",
+              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-n3','-data-disk3')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": 1000,
@@ -147,7 +147,7 @@
               "managedDisk": {
                 "storageAccountType": "Premium_LRS"
               },
-              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-03','-data-disk4')]",
+              "name": "[concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-n3','-data-disk4')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": 1000,
@@ -158,7 +158,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-03','-nic'))]"
+              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('deploymentPrefix'),'-',parameters('sqlVMName'), '-n3','-nic'))]"
             }
           ]
         },
